@@ -15,12 +15,19 @@ class FileStorage:
     __objects = {}
 
     def all(self, cls=None):
-        """Returns the dictionary __objects."""
-        if cls:
-            key = '{}.'.format(cls.__name__)
-            return {k: v for k, v in self.__objects.items() if
-                    k.startswith(key)}
-        return self.__objects
+        """
+        Returns a dictionary of models currently in storage.
+        If `cls` is provided, it returns a dictionary containing only objects
+        of the specified class.
+        """
+        if cls is None:
+            return FileStorage.__objects
+        else:
+            objs = {}
+            for key, value in FileStorage.__objects.items():
+                if isinstance(value, cls):
+                    objs[key] = value
+            return objs
 
     def new(self, obj):
         """Set in __objects obj with key <obj_class_name>.id"""
@@ -56,10 +63,8 @@ class FileStorage:
             return
 
     def delete(self, obj=None):
-        """Deletes an object from the storage"""
-        if obj is None:
-            return
-        key = "{}.{}".format(obj.__class__.__name__, obj.id)
-        if key in self.__objects:
-            del self.__objects[key]
-        self.save()
+        """Deletes obj from __objects if it's inside"""
+        if obj is not None:
+            key = "{}.{}".format(obj.__class__.__name__, obj.id)
+            if key in FileStorage.__objects:
+                del FileStorage.__objects[key]
