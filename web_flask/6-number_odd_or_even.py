@@ -51,15 +51,17 @@ def number_display(n):
 
 @app.route("/number_template/<int:n>", strict_slashes=False)
 def display_num_template(n):
-    """displays body of a template if n is an integer"""
+    """Method that displays body of a template if n is an integer"""
     return render_template("5-number.html", n=n)
 
 
 @app.route("/number_odd_or_even/<int:n>", strict_slashes=False)
 def display_odd_even(n):
-    """ displays body of a template if n is an integer
-     whether n is even or odd in the body too
+    """Method that displays body of a template if n is an integer
+       Shows whether n is even or odd in the body too
     """
     return render_template("6-number_odd_or_even.html", n=n)
+
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000)
