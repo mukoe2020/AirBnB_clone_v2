@@ -25,7 +25,7 @@ def hello_hbnb():
 @app.route("/c/<text>", strict_slashes=False)
 def text_display():
     """ displays C followed by processed  value of txt """
-    processed_text = text.replace("_", " ")
+    text = text.replace("_", " ")
     return "C {}".format(text)
 
 
